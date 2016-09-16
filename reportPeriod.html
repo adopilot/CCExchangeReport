@@ -1,0 +1,247 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>CC Izvještaj "Po danima"</title>
+    <link rel="stylesheet" href="./jqwidgets/styles/jqx.base.css" t
+          ype="text/css" />
+    <link rel="stylesheet" href="./jqwidgets/styles/jqx.classic.css" type="text/css" />
+    <link rel="stylesheet" href="./Content/bootstrap.css" type="text/css" />
+    <style>
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            padding: 3px;
+            box-sizing: border-box;
+            margin: 0;
+        }
+        .buttonIcon
+        {
+            margin: -5px 0 0 -3px;
+            width: 16px;
+            height: 17px;
+        }
+    </style>
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./jqwidgets/styles/jqx.base.css" type="text/css" />
+    <script type="text/javascript" src="./Scripts/jquery-2.2.1.min.js"></script>
+    <script type="text/javascript" src="./Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxscrollbar.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxmenu.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxcheckbox.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxlistbox.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxdropdownlist.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxgrid.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxgrid.pager.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxgrid.selection.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxgrid.sort.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxdata.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxdatetimeinput.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxcalendar.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxdatetimeinput.js"></script>
+    <script type="text/javascript" src="./jqwidgets/globalization/globalize.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxdata.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxscrollbar.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxmenu.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxgrid.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxgrid.selection.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxgrid.columnsresize.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxlistbox.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxdropdownlist.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxdata.export.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxgrid.export.js"></script> 
+    <script type="text/javascript" src="./jqwidgets/jqxgrid.aggregates.js"></script> 
+    <script type="text/javascript" src="./jqwidgets/jqxgrid.sort.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxgrid.filter.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxgrid.pager.js"></script>
+    <script type="text/javascript">
+        Date.prototype.yyyymmdd = function () {
+            var yyyy = this.getFullYear().toString();
+            var mm = (this.getMonth() + 1).toString(); // getMonth() is zero-based
+            var dd = this.getDate().toString();
+            return yyyy +'-'+ (mm[1] ? mm : "0" + mm[0]) +'-' + (dd[1] ? dd : "0" + dd[0]); // padding
+        };
+
+
+   $(document).ready(
+    function() {
+    
+     
+    var spanP1 = $("<span style='float: left; margin-top: 5px; margin-right: 4px;'>Period poziva od datuma:    </span>");
+    var periodOd = $("<div id='periodOd'  style='height: 23px; float: left; text-align:center; width: 50px;' />")
+        .jqxDateTimeInput({ culture: 'bs-Latn-BA', width: '120px', showCalendarButton: true, height: '25px' });
+    var spanP2 = $("<span style='float: left; margin-top: 5px; margin-right: 4px;'> do datuma: </span>");
+    var periodDo = $("<div id='periodDo'  style='height: 23px; float: left; text-align:center; width: 50px;' />")
+        .jqxDateTimeInput({ culture: 'bs-Latn-BA', width: '120px', showCalendarButton: true, height: '25px' });
+    var spanP3 = $("<span style='float: left; margin-top: 5px; margin-right: 4px;'>    </span>");
+    
+    var periodDo = $("<div id='periodDo'  style='height: 23px; float: left; text-align:center; width: 50px;' />")
+    .jqxDateTimeInput({ culture: 'bs-Latn-BA', width: '120px', showCalendarButton: true, height: '25px' });
+    
+    var dugmeOsvjezi = $("<input type='button' style='float: left;  margin-left: 20px;' value='Pokreni izvještaj' id='runnReport' />").jqxButton({ template: "danger" }).on('click', function () {
+        $("#jqxgrid").jqxGrid('updatebounddata');
+        $("#jqxgrid").jqxGrid('autoresizecolumns');
+    });
+    
+    
+    var dugmeExcel = $("<input type='button' style='float: left;  margin-left: 20px;' value='Napravi EXCEL' id='runExcel' />").jqxButton({ template: "success" }).on('click', function () {
+        $("#jqxgrid").jqxGrid('exportdata', 'xls', 'jqxGrid', true, null, true, './exportExcel.php');
+    });
+
+
+    var dugmePrint = $("<input type='button' style='float: left;  margin-left: 20px;' value='Štampaj' id='runPrint' />").jqxButton({ template: "info" }).on('click', function () {
+        var gridContent = $("#jqxgrid").jqxGrid('exportdata', 'html');
+        var newWindow = window.open('', '', 'width=1000, height=600'),
+        document = newWindow.document.open(),
+        pageContent =
+            '<!DOCTYPE html>\n' +
+            '<html>\n' +
+            '<head>\n' +
+            '<meta charset="utf-8" />\n' +
+            '<title>Report CALL Centar za period </title>\n' +
+            '</head>\n' +
+            '<body>\n' + gridContent + '\n</body>\n</html>';
+        document.write(pageContent);
+        document.close();
+        newWindow.print();
+
+    });
+        
+
+    var dugmeCSV = $("<input type='button' style='float: left;  margin-left: 20px;' value='Napravi CSV' id='runCSV' />").jqxButton({ template: "info" }).on('click', function () {
+        $("#jqxgrid").jqxGrid('exportdata', 'csv', 'jqxGrid', true, null, true, './exportExcel.php');
+    });
+
+    var dugmePoMjesecima = $("<input type='button' style='float: left;  margin-left: 20px;' value='Po mjesecima' id='dugmePoMjesecima' />").jqxButton().on('click', function () {
+        window.location.href = './pomjesecima.html';
+    });
+    
+    var dugmeReportPeriod = $("<input type='button' style='float: left;  margin-left: 20px;' value='Totali za period' id='dugmeReportPeriod' />").jqxButton().on('click', function () {
+        window.location.href = './reportPeriod.html';
+    });
+    
+     var dugmePoDanima = $("<input type='button' style='float: left;  margin-left: 20px;' value='Po danima' id='dugmePoDanima' />").jqxButton().on('click', function () {
+        window.location.href = './index.html';
+    });
+    
+
+        // prepare the data
+    var source = {
+        datatype: "json",
+        datafields: [
+        { name: 'tic', type: 'int' },
+        { name: 'ivo', type: 'int' },
+        { name: 'cttq', type: 'int' },
+        { name: 'aac', type: 'int' },
+        { name: 'aiq', type: 'int' },
+        { name: 'toc', type: 'int' },
+        { name: 'tocc', type: 'int' },
+        { name: 'attfoc', type: 'int' },
+        { name: 'awupfoc', type: 'int' },
+        { name: 'ahtfoc', type: 'int' },
+        { name: 'attic', type: 'int' },
+        { name: 'awutic', type: 'int' },
+        { name: 'ahtfic', type: 'int' },
+        { name: 'sl85', type: 'number' },
+        { name: 'sl83', type: 'number' },
+        { name: 'ar', type: 'number' },
+        { name: 'tocDir', type: 'int' },
+        { name: 'tocDirConCall', type: 'int' },
+        { name: 'tocDirConCallAvgDur', type: 'int' },
+        { name: 'adw', type: 'int' }
+        ],
+        url: 'dataZaPeriod.php',
+    };
+
+    var dataAdapter = new $.jqx.dataAdapter(source, {
+            formatData: function (data) {
+                
+                odDatuma = new Date();
+                doDatuma = new Date();
+
+                if ($("#periodOd").length) {
+                    odDatuma = $("#periodOd").val('date');
+                    doDatuma = $("#periodDo").val('date');
+                }
+
+                $.extend(data, {
+                    odDatuma: odDatuma.yyyymmdd(),
+                    doDatuma: doDatuma.yyyymmdd()
+                    
+                    //odDatuma: ($("#periodOd").length ? $("#periodOd").jqxDateTimeInput('getDate') :null),
+                    //doDatuma: ($("#periodDo").length ? $("#periodDo").jqxDateTimeInput('getDate') : null)
+                });
+                return data;
+            }
+    });
+    var height = $(window).height() - 30;
+
+    $("#jqxgrid").jqxGrid({
+        source: dataAdapter,
+        width: '99%',
+        height: height,
+        
+        //autoheight: true,
+        theme: 'classic',
+        columnsresize: true,
+        showstatusbar: true,
+        statusbarheight: 50,
+        showaggregates: true,
+        showtoolbar: true,
+        toolbarheight: 50,
+        //pageable: true,
+        //pagesize: 31,
+        sortable: true,
+        filterable: true,
+        columnsheight: 120,
+        columns: [
+         { text: 'Total<br />incoming<br />calls', datafield: 'tic', width: '5%',  cellsalign: 'center', align: 'center' },
+         { text: 'IVR<br />only', datafield: 'ivo', width: '5%',  cellsalign: 'center', align: 'center' },
+         { text: 'Calls<br />transfered<br />to Queue', datafield: 'cttq', width: '5%',  cellsalign: 'center', align: 'center' },
+         { text: 'Agent<br />Answered<br />Calls', datafield: 'aac', width: '5%',  cellsalign: 'center', align: 'center' },
+         { text: 'Abandoned<br />in Queue', datafield: 'aiq', width: '5%',  cellsalign: 'center', align: 'center' },
+         { text: 'Total Out<br />Direct<br />Calls', datafield: 'tocDir', width: '5%',  cellsalign: 'center', align: 'center' },
+         { text: 'Total Out<br />Direct<br />Connects<br /> calls', datafield: 'tocDirConCall', width: '5%',  cellsalign: 'center', align: 'center' },
+         { text: 'Avg<br /> talk Time<br /> for Direct <br />Out Calls (sec)', datafield: 'tocDirConCallAvgDur', width: '5%', cellsalign: 'center', align: 'center', cellsformat: 'n2' },
+         { text: 'Total Out<br />Calls', datafield: 'toc', width: '5%',  cellsalign: 'center', align: 'center' },
+         { text: 'Total Out<br /> Connects<br /> calls', datafield: 'tocc', width: '5%',  cellsalign: 'center', align: 'center' },
+         { text: 'Avg<br /> Talk Time<br /> for Out Calls (sec)', datafield: 'attfoc', width: '5%', cellsalign: 'center', align: 'center' },
+         { text: 'Avg<br /> Wrap up for <br /> Out Calls', datafield: 'awupfoc', width: '5%', cellsalign: 'center', align: 'center' },
+         { text: 'Avg<br /> handling time<br /> for OUT Calls', datafield: 'ahtfoc', width: '5%', cellsalign: 'center', align: 'center' },
+         { text: 'Avg<br /> talk time <br />Incoming Calls (sec)', datafield: 'attic', width: '5%', cellsalign: 'center', align: 'center' },
+         { text: 'Avg<br /> waiting time <br />in queue (sec) <br />(avg speed of answ) ', datafield: 'adw', width: '5%', cellsalign: 'center', align: 'center' },
+         { text: 'Avg<br /> wrap up time <br />IN Calls (sec)', datafield: 'awutic', width: '5%', cellsalign: 'center', align: 'center' },
+         { text: 'Avg<br />handling<br />time for <br />IN Calls (sec)', datafield: 'ahtfic', width: '5%', cellsalign: 'center', align: 'center' },
+         { text: 'Service<br /> Level<br /> 80/15', datafield: 'sl85', width: '5%', cellsalign: 'center', align: 'center', cellsformat: 'p2' },
+         { text: 'Service<br /> Level<br /> 80/30', datafield: 'sl83', width: '5%', cellsalign: 'center', align: 'center', cellsformat: 'p2' },
+         { text: 'Abandon<br /> Rate', datafield: 'ar', width: '5%', cellsalign: 'center', align: 'center', cellsformat: 'p2' }, 
+        ],
+        rendertoolbar: 
+            function (toolbar) {
+                var me = this;
+                var container = $("<div style='margin: 5px;'></div>");
+                var input = $("<input class='jqx-input jqx-widget-content jqx-rc-all' id='datumOd' type='text' style='height: 23px; float: left; width: 223px;' />");
+                toolbar.append(container);
+                container.append(spanP1);
+                container.append(periodOd);
+                container.append(spanP2);
+                container.append(periodDo);
+                container.append(dugmeOsvjezi);
+                container.append(dugmePrint);
+                container.append(dugmeExcel);
+                container.append(dugmeCSV);
+                container.append(dugmePoMjesecima);
+                container.append(dugmePoDanima);
+            }
+    }).jqxGrid('autoresizecolumns');
+
+    });
+    </script>
+</head>
+<body>
+    <div  id="jqxgrid"></div>
+</body>
