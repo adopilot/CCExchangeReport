@@ -1,3 +1,4 @@
 # CCExchangeReport
 HTLM reports za Elastix vritualne centrale
-Idemo ovo araditi
+
+Commit sa adinog della
