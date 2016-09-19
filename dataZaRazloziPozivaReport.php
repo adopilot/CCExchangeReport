@@ -51,7 +51,8 @@
     $kontaktTelefon  ,
     $ishodRazgovora ,
     $vrstaUpita  ,
-    $detaljiUpita
+    $detaljiUpita ,
+    $komentarUpita
     );
 
     while ($result -> fetch()) {
@@ -71,7 +72,8 @@
     'kontaktTelefon'=> $kontaktTelefon  ,
     'ishodRazgovora'=> $ishodRazgovora ,
     'vrstaUpita'=> $vrstaUpita  ,
-    'detaljiUpita'=> $detaljiUpita
+    'detaljiUpita'=> $detaljiUpita,
+    'komentarUpita' => $komentarUpita
 
 
    

@@ -148,7 +148,8 @@
         { name: 'kontaktTelefon', type: 'string' },
         { name: 'ishodRazgovora', type: 'string' },
         { name: 'vrstaUpita', type: 'string' },
-        { name: 'detaljiUpita', type: 'string' }
+        { name: 'detaljiUpita', type: 'string' },
+        { name: 'komentarUpita', type: 'string' }
         ],
         url: 'dataZaRazloziPozivaReport.php',
         id: 'call_entry_id'
@@ -187,7 +188,7 @@
         columnsresize: true,
         showstatusbar: true,
         statusbarheight: 50,
-        showaggregates: true,
+        showaggregates: false,
         showtoolbar: true,
         toolbarheight: 50,
         //pageable: true,
@@ -205,13 +206,14 @@
          { text: 'Poziv<br />Time-stamp', datafield: 'pozivTS',  cellsalign: 'center', align: 'center' ,cellsformat: 'dd.MM.yyyy HH:mm:ss',filtertype: 'date',minwidth: 150 },
          { text: 'Poziv<br />Datum ', datafield: 'pozivDatum',  cellsalign: 'center', align: 'center' ,cellsformat: 'dd.MM.yyyy',filtertype: 'date',minwidth: 110 },
          { text: 'Poziv<br />Sat ', datafield: 'pozivSAT',  cellsalign: 'center', align: 'center',minwidth: 80 },
-         { text: 'Data<br />Podrucije ', datafield: 'podrucije',  cellsalign: 'center', align: 'center' },
+         { text: 'Data<br />Podrucije ', datafield: 'podrucije',  cellsalign: 'center', align: 'center',filtertype: 'checkedlist' },
          { text: 'Data<br />JMBG', datafield: 'JMBG',  cellsalign: 'left', align: 'left' },
          { text: 'Data<br />Ime i prezime ', datafield: 'imeIprezime',  cellsalign: 'left', align: 'left' },
          { text: 'Data<br />Kontakt telefon ', datafield: 'kontaktTelefon',  cellsalign: 'left', align: 'left' },
-         { text: 'Data<br />Ishod razgovora', datafield: 'ishodRazgovora',  cellsalign: 'left', align: 'left' },
-         { text: 'Data<br />Vrsta upita ', datafield: 'vrstaUpita',  cellsalign: 'left', align: 'left' },
-         { text: 'Data<br />Detalji upita ', datafield: 'detaljiUpita',  cellsalign: 'left', align: 'left' },
+         { text: 'Data<br />Ishod razgovora', datafield: 'ishodRazgovora',  cellsalign: 'left', align: 'left',filtertype: 'checkedlist' },
+         { text: 'Data<br />Vrsta upita ', datafield: 'vrstaUpita',  cellsalign: 'left', align: 'left',filtertype: 'checkedlist' },
+         { text: 'Data<br />Detalji upita ', datafield: 'detaljiUpita',  cellsalign: 'left', align: 'left',filtertype: 'checkedlist' },
+         { text: 'Data<br />Komentar upita ', datafield: 'komentarUpita',  cellsalign: 'left', align: 'left' },
           
         ],
         rendertoolbar: 
