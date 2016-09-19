@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>CC Izvještaj "Po mjesecima"</title>
+    <title>CC Izvještaj "Po danima"</title>
     <link rel="stylesheet" href="./jqwidgets/styles/jqx.base.css" t
           ype="text/css" />
     <link rel="stylesheet" href="./jqwidgets/styles/jqx.classic.css" type="text/css" />
@@ -71,7 +71,22 @@
     function() {
     
      
-     
+    var spanP1 = $("<span style='float: left; margin-top: 5px; margin-right: 4px;'>Period poziva od datuma:    </span>");
+    var periodOd = $("<div id='periodOd'  style='height: 23px; float: left; text-align:center; width: 50px;' />")
+        .jqxDateTimeInput({ culture: 'bs-Latn-BA', width: '120px', showCalendarButton: true, height: '25px' });
+    var spanP2 = $("<span style='float: left; margin-top: 5px; margin-right: 4px;'> do datuma: </span>");
+    var periodDo = $("<div id='periodDo'  style='height: 23px; float: left; text-align:center; width: 50px;' />")
+        .jqxDateTimeInput({ culture: 'bs-Latn-BA', width: '120px', showCalendarButton: true, height: '25px' });
+    var spanP3 = $("<span style='float: left; margin-top: 5px; margin-right: 4px;'>    </span>");
+    
+    var periodDo = $("<div id='periodDo'  style='height: 23px; float: left; text-align:center; width: 50px;' />")
+    .jqxDateTimeInput({ culture: 'bs-Latn-BA', width: '120px', showCalendarButton: true, height: '25px' });
+    
+    var dugmeOsvjezi = $("<input type='button' style='float: left;  margin-left: 20px;' value='Pokreni izvještaj' id='runnReport' />").jqxButton({ template: "danger" }).on('click', function () {
+        $("#jqxgrid").jqxGrid('updatebounddata');
+        $("#jqxgrid").jqxGrid('autoresizecolumns');
+    });
+    
     
     var dugmeExcel = $("<input type='button' style='float: left;  margin-left: 20px;' value='Napravi EXCEL' id='runExcel' />").jqxButton({ template: "success" }).on('click', function () {
         $("#jqxgrid").jqxGrid('exportdata', 'xls', 'jqxGrid', true, null, true, './exportExcel.php');
@@ -101,24 +116,18 @@
         $("#jqxgrid").jqxGrid('exportdata', 'csv', 'jqxGrid', true, null, true, './exportExcel.php');
     });
 
- var dugmePoMjesecima = $("<input type='button' style='float: left;  margin-left: 20px;' value='Po mjesecima' id='dugmePoMjesecima' />").jqxButton().on('click', function () {
-        window.location.href = './pomjesecima.html';
-    });
     
-    var dugmeReportPeriod = $("<input type='button' style='float: left;  margin-left: 20px;' value='Totali za period' id='dugmeReportPeriod' />").jqxButton().on('click', function () {
-        window.location.href = './reportPeriod.html';
-    });
-    
-     var dugmePoDanima = $("<input type='button' style='float: left;  margin-left: 20px;' value='Po danima' id='dugmePoDanima' />").jqxButton().on('click', function () {
+    var dugmeIndex = $("<input type='button' style='float: left;  margin-left: 20px;' value='Početna' id='dugmeReportPeriod' />").jqxButton().on('click', function () {
         window.location.href = './index.html';
     });
+    
+    
+
         // prepare the data
     var source = {
         datatype: "json",
         datafields: [
-        { name: 'period', type:'text' },
-        { name: 'godina', type:'int' },
-        { name: 'mjesec', type:'int' },
+        { name: 'datum', type:'date' },
         { name: 'tic', type: 'int' },
         { name: 'ivo', type: 'int' },
         { name: 'cttq', type: 'int' },
@@ -140,10 +149,30 @@
         { name: 'tocDirConCallAvgDur', type: 'int' },
         { name: 'adw', type: 'int' }
         ],
-        url: 'dataPoMjesecima.php',
+        url: 'dataTotaliPoDanima.php',
     };
 
-    var dataAdapter = new $.jqx.dataAdapter(source);
+    var dataAdapter = new $.jqx.dataAdapter(source, {
+            formatData: function (data) {
+                
+                odDatuma = new Date();
+                doDatuma = new Date();
+
+                if ($("#periodOd").length) {
+                    odDatuma = $("#periodOd").val('date');
+                    doDatuma = $("#periodDo").val('date');
+                }
+
+                $.extend(data, {
+                    odDatuma: odDatuma.yyyymmdd(),
+                    doDatuma: doDatuma.yyyymmdd()
+                    
+                    //odDatuma: ($("#periodOd").length ? $("#periodOd").jqxDateTimeInput('getDate') :null),
+                    //doDatuma: ($("#periodDo").length ? $("#periodDo").jqxDateTimeInput('getDate') : null)
+                });
+                return data;
+            }
+    });
     var height = $(window).height() - 30;
 
     $("#jqxgrid").jqxGrid({
@@ -165,26 +194,24 @@
         filterable: true,
         columnsheight: 120,
         columns: [
-         { text: '<br /><br />Period', datafield: 'period',  width: '5%', aggregates: ['count'], cellsalign: 'center', align: 'center', pinned: true },
-         { text: '<br /><br />Godina', datafield: 'godina',  width: '4%', aggregates: ['count'], cellsalign: 'center', align: 'center', pinned: true },
-         { text: '<br /><br />Mjesec', datafield: 'mjesec',  width: '4%', aggregates: ['count'], cellsalign: 'center', align: 'center', pinned: true },
-         { text: 'Total<br />incoming<br />calls', datafield: 'tic', width: '4%', aggregates: ['sum', 'avg'], cellsalign: 'center', align: 'center' },
+         { text: '<br /><br />Date', datafield: 'datum', cellsformat: 'dd.MM.yyyy', width: '5%', aggregates: ['count'], cellsalign: 'center', align: 'center', pinned: true },
+         { text: 'Total<br />incoming<br />calls', datafield: 'tic', width: '5%', aggregates: ['sum', 'avg'], cellsalign: 'center', align: 'center' },
          { text: 'IVR<br />only', datafield: 'ivo', width: '4%', aggregates: ['sum', 'avg'], cellsalign: 'center', align: 'center' },
          { text: 'Calls<br />transfered<br />to Queue', datafield: 'cttq', width: '4%', aggregates: ['sum', 'avg'], cellsalign: 'center', align: 'center' },
          { text: 'Agent<br />Answered<br />Calls', datafield: 'aac', width: '4%', aggregates: ['sum', 'avg'], cellsalign: 'center', align: 'center' },
-         { text: 'Abandoned<br />in Queue', datafield: 'aiq', width: '4%', aggregates: ['sum', 'avg'], cellsalign: 'center', align: 'center' },
-         { text: 'Total Out<br />Direct<br />Calls', datafield: 'tocDir', width: '4%', aggregates: ['sum', 'avg'], cellsalign: 'center', align: 'center' },
-         { text: 'Total Out<br />Direct<br />Connects<br /> calls', datafield: 'tocDirConCall', width: '4%', aggregates: ['sum', 'avg'], cellsalign: 'center', align: 'center' },
-         { text: 'Avg<br /> talk Time<br /> for Direct <br />Out Calls (sec)', datafield: 'tocDirConCallAvgDur', width: '4%', cellsalign: 'center', align: 'center', cellsformat: 'n2' },
-         { text: 'Total Out<br />Calls', datafield: 'toc', width: '4%', aggregates: ['sum', 'avg'], cellsalign: 'center', align: 'center' },
-         { text: 'Total Out<br /> Connects<br /> calls', datafield: 'tocc', width: '4%', aggregates: ['sum', 'avg'], cellsalign: 'center', align: 'center' },
-         { text: 'Avg<br /> Talk Time<br /> for Out Calls (sec)', datafield: 'attfoc', width: '4%', cellsalign: 'center', align: 'center' },
-         { text: 'Avg<br /> Wrap up for <br /> Out Calls', datafield: 'awupfoc', width: '4%', cellsalign: 'center', align: 'center' },
-         { text: 'Avg<br /> handling time<br /> for OUT Calls', datafield: 'ahtfoc', width: '4%', cellsalign: 'center', align: 'center' },
-         { text: 'Avg<br /> talk time <br />Incoming Calls (sec)', datafield: 'attic', width: '4%', cellsalign: 'center', align: 'center' },
-         { text: 'Avg<br /> waiting time <br />in queue (sec) <br />(avg speed of answ) ', datafield: 'adw', width: '4%', cellsalign: 'center', align: 'center' },
-         { text: 'Avg<br /> wrap up time <br />IN Calls (sec)', datafield: 'awutic', width: '4%', cellsalign: 'center', align: 'center' },
-         { text: 'Avg<br />handling<br />time for <br />IN Calls (sec)', datafield: 'ahtfic', width: '4%', cellsalign: 'center', align: 'center' },
+         { text: 'Abandoned<br />in Queue', datafield: 'aiq', width: '5%', aggregates: ['sum', 'avg'], cellsalign: 'center', align: 'center' },
+         { text: 'Total Out<br />Direct<br />Calls', datafield: 'tocDir', width: '5%', aggregates: ['sum', 'avg'], cellsalign: 'center', align: 'center' },
+         { text: 'Total Out<br />Direct<br />Connects<br /> calls', datafield: 'tocDirConCall', width: '5%', aggregates: ['sum', 'avg'], cellsalign: 'center', align: 'center' },
+         { text: 'Avg<br /> talk Time<br /> for Direct <br />Out Calls (sec)', datafield: 'tocDirConCallAvgDur', width: '5%', cellsalign: 'center', align: 'center', cellsformat: 'n2' },
+         { text: 'Total Out<br />Calls', datafield: 'toc', width: '5%', aggregates: ['sum', 'avg'], cellsalign: 'center', align: 'center' },
+         { text: 'Total Out<br /> Connects<br /> calls', datafield: 'tocc', width: '5%', aggregates: ['sum', 'avg'], cellsalign: 'center', align: 'center' },
+         { text: 'Avg<br /> Talk Time<br /> for Out Calls (sec)', datafield: 'attfoc', width: '5%', cellsalign: 'center', align: 'center' },
+         { text: 'Avg<br /> Wrap up for <br /> Out Calls', datafield: 'awupfoc', width: '5%', cellsalign: 'center', align: 'center' },
+         { text: 'Avg<br /> handling time<br /> for OUT Calls', datafield: 'ahtfoc', width: '5%', cellsalign: 'center', align: 'center' },
+         { text: 'Avg<br /> talk time <br />Incoming Calls (sec)', datafield: 'attic', width: '5%', cellsalign: 'center', align: 'center' },
+         { text: 'Avg<br /> waiting time <br />in queue (sec) <br />(avg speed of answ) ', datafield: 'adw', width: '5%', cellsalign: 'center', align: 'center' },
+         { text: 'Avg<br /> wrap up time <br />IN Calls (sec)', datafield: 'awutic', width: '5%', cellsalign: 'center', align: 'center' },
+         { text: 'Avg<br />handling<br />time for <br />IN Calls (sec)', datafield: 'ahtfic', width: '5%', cellsalign: 'center', align: 'center' },
          { text: 'Service<br /> Level<br /> 80/15', datafield: 'sl85', width: '4%', cellsalign: 'center', align: 'center', cellsformat: 'p2' },
          { text: 'Service<br /> Level<br /> 80/30', datafield: 'sl83', width: '4%', cellsalign: 'center', align: 'center', cellsformat: 'p2' },
          { text: 'Abandon<br /> Rate', datafield: 'ar', width: '4%', cellsalign: 'center', align: 'center', cellsformat: 'p2' }, 
@@ -195,12 +222,16 @@
                 var container = $("<div style='margin: 5px;'></div>");
                 var input = $("<input class='jqx-input jqx-widget-content jqx-rc-all' id='datumOd' type='text' style='height: 23px; float: left; width: 223px;' />");
                 toolbar.append(container);
-                
+                container.append(spanP1);
+                container.append(periodOd);
+                container.append(spanP2);
+                container.append(periodDo);
+                container.append(dugmeOsvjezi);
                 container.append(dugmePrint);
                 container.append(dugmeExcel);
                 container.append(dugmeCSV);
-                container.append(dugmePoDanima);
-                container.append(dugmeReportPeriod);
+                container.append(dugmeIndex);
+                
             }
     }).jqxGrid('autoresizecolumns');
 
