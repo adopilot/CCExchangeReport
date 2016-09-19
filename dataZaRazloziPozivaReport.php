@@ -13,7 +13,7 @@
 	$mysqli = new mysqli("$hostname", "$username", "$password", $database);
 	/* check connection */
 	if (mysqli_connect_errno()) {
-		printf("Nijesam uspio ostvariti konekciju sa MySqlOm: %s\n", mysqli_connect_error());
+		printf("Nisam uspio ostvariti konekciju sa MySqlOm: %s\n", mysqli_connect_error());
 		exit();
 	}
     $odDatuma =date("Y-m-d");
