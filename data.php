@@ -29,6 +29,7 @@
         $doDatuma = $_GET['doDatuma'];
     }
 
+
     $result = $mysqli->prepare("call call_center_pro.totoal_cals_per_day(?,?)");
     $result->bind_param('ss', $odDatuma, $doDatuma);
 
