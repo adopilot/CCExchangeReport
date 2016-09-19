@@ -84,7 +84,7 @@
     
     var dugmeOsvjezi = $("<input type='button' style='float: left;  margin-left: 20px;' value='Pokreni izvještaj' id='runnReport' />").jqxButton({ template: "danger" }).on('click', function () {
         $("#jqxgrid").jqxGrid('updatebounddata');
-        $("#jqxgrid").jqxGrid('autoresizecolumns');
+        $("#jqxgrid").jqxGrid('autoresizecolumns','all');
     });
     
     
@@ -134,23 +134,24 @@
         datatype: "json",
         datafields: [
         { name: 'call_entry_id', type: 'int' },
-        { name: 'telefonskiBroj', type: 'int' },
-        { name: 'agentName', type: 'int' },
+        { name: 'telefonskiBroj', type: 'string' },
+        { name: 'agentName', type: 'string' },
         { name: 'agentNumber', type: 'int' },
         { name: 'ocjena', type: 'int' },
         { name: 'trajanje', type: 'int' },
-        { name: 'pozivTS', type: 'int' },
-        { name: 'pozivDatum', type: 'int' },
+        { name: 'pozivTS', type: 'date' },
+        { name: 'pozivDatum', type: 'date' },
         { name: 'pozivSAT', type: 'int' },
-        { name: 'podrucije', type: 'int' },
-        { name: 'JMBG', type: 'int' },
-        { name: 'imeIprezimeawutic', type: 'int' },
-        { name: 'kontaktTelefon', type: 'int' },
-        { name: 'ishodRazgovora', type: 'number' },
-        { name: 'vrstaUpita', type: 'number' },
-        { name: 'detaljiUpita', type: 'number' }
+        { name: 'podrucije', type: 'string' },
+        { name: 'JMBG', type: 'string' },
+        { name: 'imeIprezime', type: 'string' },
+        { name: 'kontaktTelefon', type: 'string' },
+        { name: 'ishodRazgovora', type: 'string' },
+        { name: 'vrstaUpita', type: 'string' },
+        { name: 'detaljiUpita', type: 'string' }
         ],
         url: 'dataZaRazloziPozivaReport.php',
+        id: 'call_entry_id'
     };
 
     var dataAdapter = new $.jqx.dataAdapter(source, {
@@ -195,26 +196,23 @@
         filterable: true,
         columnsheight: 120,
         columns: [
-         { text: 'telefonskiBroj', datafield: 'telefonskiBroj', width: '5%',  cellsalign: 'center', align: 'center' },
-         //{ text: 'IVR<br />only', datafield: 'ivo', width: '5%',  cellsalign: 'center', align: 'center' },
-         //{ text: 'Calls<br />transfered<br />to Queue', datafield: 'cttq', width: '5%',  cellsalign: 'center', align: 'center' },
-         //{ text: 'Agent<br />Answered<br />Calls', datafield: 'aac', width: '5%',  cellsalign: 'center', align: 'center' },
-         //{ text: 'Abandoned<br />in Queue', datafield: 'aiq', width: '5%',  cellsalign: 'center', align: 'center' },
-         //{ text: 'Total Out<br />Direct<br />Calls', datafield: 'tocDir', width: '5%',  cellsalign: 'center', align: 'center' },
-         //{ text: 'Total Out<br />Direct<br />Connects<br /> calls', datafield: 'tocDirConCall', width: '5%',  cellsalign: 'center', align: 'center' },
-         //{ text: 'Avg<br /> talk Time<br /> for Direct <br />Out Calls (sec)', datafield: 'tocDirConCallAvgDur', width: '5%', cellsalign: 'center', align: 'center', cellsformat: 'n2' },
-         //{ text: 'Total Out<br />Calls', datafield: 'toc', width: '5%',  cellsalign: 'center', align: 'center' },
-         //{ text: 'Total Out<br /> Connects<br /> calls', datafield: 'tocc', width: '5%',  cellsalign: 'center', align: 'center' },
-         //{ text: 'Avg<br /> Talk Time<br /> for Out Calls (sec)', datafield: 'attfoc', width: '5%', cellsalign: 'center', align: 'center' },
-         //{ text: 'Avg<br /> Wrap up for <br /> Out Calls', datafield: 'awupfoc', width: '5%', cellsalign: 'center', align: 'center' },
-         //{ text: 'Avg<br /> handling time<br /> for OUT Calls', datafield: 'ahtfoc', width: '5%', cellsalign: 'center', align: 'center' },
-         //{ text: 'Avg<br /> talk time <br />Incoming Calls (sec)', datafield: 'attic', width: '5%', cellsalign: 'center', align: 'center' },
-         //{ text: 'Avg<br /> waiting time <br />in queue (sec) <br />(avg speed of answ) ', datafield: 'adw', width: '5%', cellsalign: 'center', align: 'center' },
-         //{ text: 'Avg<br /> wrap up time <br />IN Calls (sec)', datafield: 'awutic', width: '5%', cellsalign: 'center', align: 'center' },
-         //{ text: 'Avg<br />handling<br />time for <br />IN Calls (sec)', datafield: 'ahtfic', width: '5%', cellsalign: 'center', align: 'center' },
-         //{ text: 'Service<br /> Level<br /> 80/15', datafield: 'sl85', width: '5%', cellsalign: 'center', align: 'center', cellsformat: 'p2' },
-         //{ text: 'Service<br /> Level<br /> 80/30', datafield: 'sl83', width: '5%', cellsalign: 'center', align: 'center', cellsformat: 'p2' },
-         //{ text: 'Abandon<br /> Rate', datafield: 'ar', width: '5%', cellsalign: 'center', align: 'center', cellsformat: 'p2' }, 
+         { text: 'call_entry_id', datafield: 'call_entry_id', hidden: true  },
+         { text: 'Pozivaoc', datafield: 'telefonskiBroj',  cellsalign: 'right', align: 'right',minwidth: 160 },
+         { text: 'Agent<br />Ime', datafield: 'agentName',  cellsalign: 'left', align: 'left', filtertype: 'checkedlist',minwidth: 100 },
+         { text: 'Agent<br />Extenzija', datafield: 'agentNumber',  cellsalign: 'center', align: 'center', filtertype: 'checkedlist',minwidth: 80 },
+         { text: 'Ocjena<br />za agenta', datafield: 'ocjena',  cellsalign: 'center', align: 'center',minwidth: 80 },
+         { text: 'Trajanje<br />poziva (sec)', datafield: 'trajanje',  cellsalign: 'center', align: 'center',minwidth: 80 },
+         { text: 'Poziv<br />Time-stamp', datafield: 'pozivTS',  cellsalign: 'center', align: 'center' ,cellsformat: 'dd.MM.yyyy HH:mm:ss',filtertype: 'date',minwidth: 150 },
+         { text: 'Poziv<br />Datum ', datafield: 'pozivDatum',  cellsalign: 'center', align: 'center' ,cellsformat: 'dd.MM.yyyy',filtertype: 'date',minwidth: 110 },
+         { text: 'Poziv<br />Sat ', datafield: 'pozivSAT',  cellsalign: 'center', align: 'center',minwidth: 80 },
+         { text: 'Data<br />Podrucije ', datafield: 'podrucije',  cellsalign: 'center', align: 'center' },
+         { text: 'Data<br />JMBG', datafield: 'JMBG',  cellsalign: 'left', align: 'left' },
+         { text: 'Data<br />Ime i prezime ', datafield: 'imeIprezime',  cellsalign: 'left', align: 'left' },
+         { text: 'Data<br />Kontakt telefon ', datafield: 'kontaktTelefon',  cellsalign: 'left', align: 'left' },
+         { text: 'Data<br />Ishod razgovora', datafield: 'ishodRazgovora',  cellsalign: 'left', align: 'left' },
+         { text: 'Data<br />Vrsta upita ', datafield: 'vrstaUpita',  cellsalign: 'left', align: 'left' },
+         { text: 'Data<br />Detalji upita ', datafield: 'detaljiUpita',  cellsalign: 'left', align: 'left' },
+          
         ],
         rendertoolbar: 
             function (toolbar) {
@@ -233,7 +231,8 @@
                 container.append(dugmePoMjesecima);
                 container.append(dugmePoDanima);
             }
-    }).jqxGrid('autoresizecolumns');
+    });
+    //.jqxGrid('autoresizecolumns');
 
     });
     </script>
