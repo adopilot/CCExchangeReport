@@ -1,5 +1,7 @@
+CREATE DEFINER=`iservis`@`localhost` PROCEDURE `report_razlozi_poziva`(IN odDatuma date,IN doDatuma date)
+BEGIN
 SELECT 
-	call_entry.id as call_entry_id
+	 call_entry.id as call_entry_id
 	,callerid as telefonskiBroj
     ,agent.name as agentName
     ,agent.number as agentNumber
@@ -15,7 +17,7 @@ SELECT
 	,ishodRazgovora
 	,vrstaUpita
 	,detaljiUpita
-    ,id_campaign
+    ,komentarUpita
 FROM call_center_pro.call_entry
 inner JOIN call_center_pro.agent ON agent.id=call_entry.id_agent
 inner join (
@@ -28,6 +30,7 @@ select
     ,max(case when dynamic_form_node.name='Osnovni podaci' and dynamic_form_node_field.description='Ishod razgovora' then dynamic_form_data_recolected_entry.value end) as ishodRazgovora
     ,max(case when dynamic_form_node_field.description='Vrsta upita' then dynamic_form_data_recolected_entry.value end) as vrstaUpita
     ,max(case when dynamic_form_node_field.description='Detalji upita' then dynamic_form_data_recolected_entry.value end) as detaljiUpita
+    ,max(case when dynamic_form_node_field.description LIKE '%komentar%' then dynamic_form_data_recolected_entry.value end) as komentarUpita
 from dynamic_form_node
 inner join dynamic_form_node_field on dynamic_form_node.id=dynamic_form_node_field.id_dynamic_form_node
 inner join dynamic_form_data_recolected_entry on dynamic_form_data_recolected_entry.id_dynamic_form_node_field = dynamic_form_node_field.id
@@ -35,3 +38,5 @@ inner join dynamic_form_data_recolected_entry on dynamic_form_data_recolected_en
 group by dynamic_form_data_recolected_entry.id_call_entry
 ) as callData on call_entry.id=callData.id_call_entry
 left outer join asteriskcdrdb.survey on call_entry.uniqueid=uid
+where call_entry.datetime_end between date(odDatuma) and date(doDatuma)	;	
+END
