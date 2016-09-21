@@ -65,7 +65,8 @@
             var dd = this.getDate().toString();
             return yyyy +'-'+ (mm[1] ? mm : "0" + mm[0]) +'-' + (dd[1] ? dd : "0" + dd[0]); // padding
         };
-
+ 
+var prviPut = true;
 
    $(document).ready(
     function() {
@@ -83,6 +84,7 @@
     .jqxDateTimeInput({ culture: 'bs-Latn-BA', width: '120px', showCalendarButton: true, height: '25px' });
     
     var dugmeOsvjezi = $("<input type='button' style='float: left;  margin-left: 20px;' value='Pokreni izvještaj' id='runnReport' />").jqxButton({ template: "danger" }).on('click', function () {
+        prviPut = false;
         $("#jqxgrid").jqxGrid('updatebounddata');
         $("#jqxgrid").jqxGrid('autoresizecolumns');
     });
@@ -163,8 +165,8 @@
 
                 $.extend(data, {
                     odDatuma: odDatuma.yyyymmdd(),
-                    doDatuma: doDatuma.yyyymmdd()
-                    
+                    doDatuma: doDatuma.yyyymmdd(),
+                    prviPut: prviPut
                     //odDatuma: ($("#periodOd").length ? $("#periodOd").jqxDateTimeInput('getDate') :null),
                     //doDatuma: ($("#periodDo").length ? $("#periodDo").jqxDateTimeInput('getDate') : null)
                 });

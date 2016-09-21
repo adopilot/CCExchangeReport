@@ -29,6 +29,9 @@
         $doDatuma = $_GET['doDatuma'];
     }
 
+    if ($_GET['prviPut'] === 'true'){
+        goto kraj;
+    }
 
     $result = $mysqli->prepare("call call_center_pro.report_razlozi_poziva(?,?)");
     $result->bind_param('ss', $odDatuma, $doDatuma);
@@ -79,11 +82,13 @@
    
 	  );
 	}
+    
     echo json_encode($reportData);
 	/* close statement */
 	$result->close();
 	/* close connection */
 	$mysqli->close();
-
+    
+    kraj: //Ja seljaka majko draga
 
 ?>

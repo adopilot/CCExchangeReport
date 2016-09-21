@@ -59,6 +59,7 @@
     <script type="text/javascript" src="./jqwidgets/jqxgrid.filter.js"></script>
     <script type="text/javascript" src="./jqwidgets/jqxgrid.pager.js"></script>
     <script type="text/javascript">
+    var prviPut = true;
         Date.prototype.yyyymmdd = function () {
             var yyyy = this.getFullYear().toString();
             var mm = (this.getMonth() + 1).toString(); // getMonth() is zero-based
@@ -69,6 +70,7 @@
 
    $(document).ready(
     function() {
+    
     
      
     var spanP1 = $("<span style='float: left; margin-top: 5px; margin-right: 4px;'>Period poziva od datuma:    </span>");
@@ -83,6 +85,7 @@
     .jqxDateTimeInput({ culture: 'bs-Latn-BA', width: '120px', showCalendarButton: true, height: '25px' });
     
     var dugmeOsvjezi = $("<input type='button' style='float: left;  margin-left: 20px;' value='Pokreni izvještaj' id='runnReport' />").jqxButton({ template: "danger" }).on('click', function () {
+        prviPut = false;
         $("#jqxgrid").jqxGrid('updatebounddata');
         $("#jqxgrid").jqxGrid('autoresizecolumns','all');
     });
@@ -155,7 +158,7 @@
                 
                 odDatuma = new Date();
                 doDatuma = new Date();
-
+                
                 if ($("#periodOd").length) {
                     odDatuma = $("#periodOd").val('date');
                     doDatuma = $("#periodDo").val('date');
@@ -163,7 +166,8 @@
 
                 $.extend(data, {
                     odDatuma: odDatuma.yyyymmdd(),
-                    doDatuma: doDatuma.yyyymmdd()
+                    doDatuma: doDatuma.yyyymmdd(),
+                    prviPut: prviPut
                     
                     //odDatuma: ($("#periodOd").length ? $("#periodOd").jqxDateTimeInput('getDate') :null),
                     //doDatuma: ($("#periodDo").length ? $("#periodDo").jqxDateTimeInput('getDate') : null)

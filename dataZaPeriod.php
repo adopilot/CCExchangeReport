@@ -29,6 +29,9 @@
         $doDatuma = $_GET['doDatuma'];
     }
 
+    if ($_GET['prviPut'] === 'true'){
+        goto kraj; //Ja seljaka majko mila;
+    }
 
     $result = $mysqli->prepare("call call_center_pro.total_calls_for_period(?,?)");
     $result->bind_param('ss', $odDatuma, $doDatuma);
@@ -88,5 +91,6 @@
 	/* close connection */
 	$mysqli->close();
 
+    kraj:
 
 ?>
