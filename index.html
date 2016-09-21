@@ -25,15 +25,37 @@
     <link href="Content/bootstrap.css" rel="stylesheet" />
     <link rel="stylesheet" href="./jqwidgets/styles/jqx.base.css" type="text/css" />
 </head>
-<body>
+<body class="container-fluid">
 <h1>CC Reports app</h1>
-    <br />
-<a href="./reportTotaliPoDanima.html" >Izvještaj Totali po danima</a>
-<br />
-<a href="./reportTotaliPoMjesecima.html" >Izvještaj Totali po mjesecima</a>
-<br />
-<a href="./reportTotaliTotali.html" >Izvještaj Totali za period</a>
-<br />
-<a href="./reportRazloziPoziva.html" >Izvještaj Razlozi poziva</a>
+ <div class="form-group">
+<table class="table table-striped table-condensed" id="tableaFiltera" name="tableaFiltera">
+                <thead>
+                    <tr>
+                        <th>Naziv reporta  </th>
+                        <th>Opis</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                            <td title="Pokrenite izvještaj"><a href="./reportTotaliPoDanima.html" >Izvještaj Totali po danima</a></td>
+                            <td title="Opis izvještaja">Izvještaj pokazuje totale po danima</td>
+                        </tr>
+                          <tr>
+                            <td title="Pokrenite izvještaj"><a href="./reportTotaliPoMjesecima.html" >Izvještaj Totali po mjesecima</a></td>
+                            <td title="Opis izvještaja">Izvještaj pokazuje totale po mjesecima</td>
+                        </tr>
+                          <tr>
+                            <td title="Pokrenite izvještaj"><a href="./reportTotaliTotali.html" >Izvještaj Totali za period</a></td>
+                            <td title="Opis izvještaja">Izvještaj pokazuje totale po period</td>
+                        </tr>
+                          <tr>
+                            <td title="Pokrenite izvještaj"><a href="./reportRazloziPoziva.html" >Izvještaj Razlozi poziva</a></td>
+                            <td title="Opis izvještaja">Razlozi poziva </td>
+                        </tr>
+                    
+                </tbody>
+            </table>
+</div>
 </body>
 </html>
