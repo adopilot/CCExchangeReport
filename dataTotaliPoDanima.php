@@ -28,10 +28,8 @@
 	{
         $doDatuma = $_GET['doDatuma'];
     }
-    if ($_GET['prviPut'] === 'true'){
-        goto kraj; //Ja seljaka majko mila;
-    }
-
+    if (isset( $_GET['prviPut']) &&  $_GET['prviPut'] !== 'true'){
+       
     $result = $mysqli->prepare("call call_center_pro.totoal_cals_per_day(?,?)");
     $result->bind_param('ss', $odDatuma, $doDatuma);
 
@@ -91,6 +89,9 @@
 	/* close connection */
 	$mysqli->close();
 
-    kraj:
+     }
+    else {
+        echo 'Priv put mi je pa ne vracam nista';
+    }
 
 ?>

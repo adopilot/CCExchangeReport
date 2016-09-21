@@ -32,7 +32,6 @@
     if (isset( $_GET['prviPut']) &&  $_GET['prviPut'] !== 'true'){
         
     
-
     $result = $mysqli->prepare("call call_center_pro.report_razlozi_poziva(?,?)");
     $result->bind_param('ss', $odDatuma, $doDatuma);
 
