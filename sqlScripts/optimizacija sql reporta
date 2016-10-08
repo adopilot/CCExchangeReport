@@ -1,0 +1,12 @@
+use asteriskcdrdb;
+create index ix_cdr_call_date
+on cdr (calldate);
+
+use call_center_pro;
+create index ix_call_entry_datetime_end
+on call_center_pro (datetime_end);
+
+
+use call_center_pro;
+create index ix_audit_ado_tune
+on audit (id_agent,datetime_init);
