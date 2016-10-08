@@ -75,7 +75,7 @@ select
 	,sum(case when left(dstchannel,15) = 'SIP/TO_LOGOSOFT' AND left(channel,5) = 'SIP/5' and billsec>0 then 1 else 0 end)  as tocDirConCall /*--total outgiung direct calls connected --*/
 	,avg(case when left(dstchannel,15) = 'SIP/TO_LOGOSOFT' AND left(channel,5) = 'SIP/5' and billsec>0 then billsec else null end)   AS tocDirConCallAvgDur /*--average call durataion for direct calls from extensions*/
     from asteriskcdrdb.cdr c
-    where c.calldate between date(odDatuma) and date(doDatuma)	
+    where c.calldate between date(odDatuma) and  ADDDATE( date( doDatuma )	,INTERVAL 1 DAY)
     group by date(calldate)
     ) as datum
   left outer join (
@@ -92,7 +92,7 @@ select
                 ,SUM(case when e.status='terminada' and COALESCE(duration_wait,0) < 30 then 1 else 0 end)  icaw30sec  /*-inbound calls answered within 30 sec since the connection with the bank*/
                 ,SUM(case when e.status='terminada' and COALESCE(duration_wait,0) < 15 then 1 else 0 end)  icaw15sec  /*-inbound calls answered within 30 sec since the connection with the bank*/
 				from call_center_pro.call_entry e
-                where e.datetime_end between date(odDatuma) and date(doDatuma)	
+                where e.datetime_end between date(odDatuma) and  ADDDATE( date( doDatuma )	,INTERVAL 1 DAY)
 				group  by date(e.datetime_end)
 ) as svi_pozivi_u_call_pro on datum.datum=svi_pozivi_u_call_pro.datum  
 LEFT OUTER JOIN (
@@ -108,7 +108,7 @@ select
 		when 'Hangup' then duration end) as attfoc /*Average Talk Time for Out Calls (sec)*/       
 from call_center_pro.call_progress_log
 where id_call_outgoing is not null 
-and   datetime_entry between date(odDatuma) and date(doDatuma)
+and   datetime_entry between date(odDatuma) and  ADDDATE( date( doDatuma )	,INTERVAL 1 DAY)
 GROUP BY DATE(datetime_entry) 
 )    AS cpl ON datum.datum=cpl.datum
 
@@ -122,8 +122,8 @@ from audit
 inner join call_progress_log on audit.id_agent=call_progress_log.id_agent and audit.datetime_init=call_progress_log.datetime_entry
 where id_break=9 
 and call_progress_log.duration is not null
-and   datetime_init between date(odDatuma) and date(doDatuma)
+and   datetime_init between date(odDatuma) and  ADDDATE( date( doDatuma )	,INTERVAL 1 DAY)
 group by date(audit.datetime_init)
 ) as wrapUpTimes on datum.datum=wrapUpTimes.datum
-where datum.datum between date(odDatuma) and date(doDatuma)	;	
+where datum.datum between date(odDatuma) and   date( doDatuma )	;	
 END
