@@ -1,4 +1,6 @@
-CREATE DEFINER=`iservis`@`localhost` PROCEDURE `totoal_cals_per_day`(IN odDatuma date,IN doDatuma date)
+DELIMITER $$
+
+CREATE DEFINER=`iservis_report`@`localhost` PROCEDURE `totoal_cals_per_day`(IN odDatuma date,IN doDatuma date)
 BEGIN
 select
 	datum.datum as datum, 
@@ -126,4 +128,4 @@ and   datetime_init between date(odDatuma) and  ADDDATE( date( doDatuma )	,INTER
 group by date(audit.datetime_init)
 ) as wrapUpTimes on datum.datum=wrapUpTimes.datum
 where datum.datum between date(odDatuma) and   date( doDatuma )	;	
-END
+END$$
