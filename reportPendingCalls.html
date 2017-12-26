@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>CC Izvještaj "Pending calls"</title>
+    <link rel="stylesheet" href="./jqwidgets/styles/jqx.base.css" t
+          ype="text/css" />
+    <link rel="stylesheet" href="./jqwidgets/styles/jqx.classic.css" type="text/css" />
+    <link rel="stylesheet" href="./Content/bootstrap.css" type="text/css" />
+    <style>
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            padding: 3px;
+            box-sizing: border-box;
+            margin: 0;
+        }
+        .buttonIcon
+        {
+            margin: -5px 0 0 -3px;
+            width: 16px;
+            height: 17px;
+        }
+    </style>
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./jqwidgets/styles/jqx.base.css" type="text/css" />
+    <script type="text/javascript" src="./Scripts/jquery-2.2.1.min.js"></script>
+    <script type="text/javascript" src="./Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxmenu.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxcheckbox.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxlistbox.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxcombobox.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxdropdownlist.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxgrid.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxgrid.pager.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxgrid.selection.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxgrid.sort.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxdata.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxcalendar.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxdatetimeinput.js"></script>
+    <script type="text/javascript" src="./jqwidgets/globalization/globalize.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxtabs.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxdata.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxscrollbar.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxmenu.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxgrid.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxgrid.selection.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxgrid.columnsresize.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxdropdownlist.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxdata.export.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxgrid.export.js"></script> 
+    <script type="text/javascript" src="./jqwidgets/jqxgrid.aggregates.js"></script> 
+    <script type="text/javascript" src="./jqwidgets/jqxgrid.sort.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxgrid.filter.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxgrid.pager.js"></script>
+    <script type="text/javascript" src="./Scripts/pendingCalls.js"></script>
+</head>
+<body>
+        <div id="wrapper">
+                <div style="position:absolute;
+                bottom:0;
+                top:52px;
+                width:99%;
+                overflow:auto;
+                margin:0;
+                left:5px;"
+                     id="kontajner">
+    <div  id="tabPendingCalls">
+        <ul>
+            <li style="margin-left: 30px;">Filter Kampanja</li>
+            <li>Lista kampanja</li>
+            <li>Pending calls</li>
+        </ul>
+        <div>
+        <div class="form">
+                <div class="form-group">
+                    <label class="col-md-2  control-label" for="kampanjeOdDatumaPC">Kampanje od datuma:</label>
+                    <div class="col-md-10">
+                        <div id="kampanjeOdDatumaPC" name="kampanjeOdDatumaPC"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                        <label class="col-md-2  control-label" for="kampanjeDoDatumaPC">Kampanje do datuma:</label>
+                        <div class="col-md-10 ">
+                            <div id="kampanjeDoDatumaPC" name="kampanjeDoDatumaPC"></div>
+                        </div>
+                </div>
+                <div class="form-group">
+                        <label class="col-md-2  control-label" for="kampanjeStatusPC">Kampanje sa statusom:</label>
+                        <select id="kampanjeStatusPC" class="col-md-10" name="kampanjeStatusPC">
+                                <option selected value="SVI">Bilo koji status</option>
+                                <option value="T">Završene kampanje</option>
+                                <option value="A">Akivine kampanje</option>
+                                <option value="null">Kampanje bez stausa</option>
+                        </select>
+                </div>
+        </div>
+        </div>
+        <div>
+            <div id="gridKmapanjaPc" name="gridKmapanjaPc">
+            </div>
+        </div>
+        <div>
+                <div id="gridPoziviPc" name="gridPoziviPc">
+                    </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
