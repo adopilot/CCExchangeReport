@@ -4,7 +4,7 @@ on cdr (calldate);
 
 use call_center_pro;
 create index ix_call_entry_datetime_end
-on call_center_pro (datetime_end);
+on call_center_pro.call_entry (datetime_end);
 
 
 use call_center_pro;

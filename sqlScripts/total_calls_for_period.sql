@@ -1,4 +1,6 @@
-CREATE DEFINER=`ado`@`%` PROCEDURE `total_calls_for_period`(IN odDatuma date,IN doDatuma date)
+DELIMITER $$
+
+CREATE DEFINER=`iservis_report`@`localhost` PROCEDURE `total_calls_for_period`(IN odDatuma date,IN doDatuma date)
 BEGIN
 select 
 	COALESCE(datum.ivo,0) + COALESCE(cttq,0)  + COALESCE(aiqLT3sec,0) as tic ,/*--total incoming calls*/
@@ -123,4 +125,4 @@ and call_progress_log.duration is not null
 and datetime_entry between date( odDatuma )  and  ADDDATE( date( doDatuma )	,INTERVAL 1 DAY)
 ) as wrapUpTimes on datum.datum=wrapUpTimes.datum;
 
-END
+END$$
