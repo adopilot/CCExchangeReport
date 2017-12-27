@@ -1,5 +1,3 @@
-DELIMITER $$
-
 CREATE DEFINER=`iservis_report`@`localhost` PROCEDURE `report_razlozi_poziva`(IN odDatuma date,IN doDatuma date)
 BEGIN
 SELECT 
@@ -41,4 +39,4 @@ group by dynamic_form_data_recolected_entry.id_call_entry
 ) as callData on call_entry.id=callData.id_call_entry
 left outer join asteriskcdrdb.survey on call_entry.uniqueid=uid
 where call_entry.datetime_end between date(odDatuma) and date(doDatuma)	;	
-END$$
+END

@@ -1,6 +1,10 @@
+-- --------------------------------------------------------------------------------
+-- Routine DDL
+-- Note: comments before and after the routine body will not be stored by the server
+-- --------------------------------------------------------------------------------
 DELIMITER $$
 
-CREATE DEFINER=`iservis_report`@`localhost` PROCEDURE `total_calls_for_period`(IN odDatuma date,IN doDatuma date)
+CREATE DEFINER=`ado`@`%` PROCEDURE `total_calls_for_period`(IN odDatuma date,IN doDatuma date)
 BEGIN
 select 
 	COALESCE(datum.ivo,0) + COALESCE(cttq,0)  + COALESCE(aiqLT3sec,0) as tic ,/*--total incoming calls*/
@@ -77,7 +81,7 @@ select
 	,sum(case when left(dstchannel,15) = 'SIP/TO_LOGOSOFT' AND left(channel,5) = 'SIP/5' and billsec>0 then 1 else 0 end)  as tocDirConCall /*--total outgiung direct calls connected --*/
 	,avg(case when left(dstchannel,15) = 'SIP/TO_LOGOSOFT' AND left(channel,5) = 'SIP/5' and billsec>0 then billsec else null end)   AS tocDirConCallAvgDur /*--average call durataion for direct calls from extensions*/
     from asteriskcdrdb.cdr c
-	where c.calldate between date( odDatuma )  and ADDDATE( date( doDatuma )	,INTERVAL 1 DAY)
+	where date(c.calldate) between date( odDatuma )  and date( doDatuma )	
     ) as datum
   left outer join (
 		select 
@@ -93,7 +97,7 @@ select
                 ,SUM(case when e.status='terminada' and COALESCE(duration_wait,0) < 30 then 1 else 0 end)  icaw30sec  /*-inbound calls answered within 30 sec since the connection with the bank*/
                 ,SUM(case when e.status='terminada' and COALESCE(duration_wait,0) < 15 then 1 else 0 end)  icaw15sec  /*-inbound calls answered within 30 sec since the connection with the bank*/
 				from call_center_pro.call_entry e
-				where e.datetime_end between date( odDatuma )  and ADDDATE( date( doDatuma )	,INTERVAL 1 DAY)
+				where date(e.datetime_end) between date( odDatuma )  and date( doDatuma )
 ) as svi_pozivi_u_call_pro on datum.datum=svi_pozivi_u_call_pro.datum  
 LEFT OUTER JOIN (
 select 
@@ -108,7 +112,7 @@ select
 		when 'Hangup' then duration end) as attfoc /*Average Talk Time for Out Calls (sec)*/       
 from call_center_pro.call_progress_log
 where id_call_outgoing is not null 
-and datetime_entry between date( odDatuma )  and  ADDDATE( date( doDatuma )	,INTERVAL 1 DAY)
+and date(datetime_entry) between date( odDatuma )  and date( doDatuma )	
 
 )    AS cpl ON datum.datum=cpl.datum
 
@@ -122,7 +126,7 @@ from audit
 left outer join  call_progress_log on audit.id_agent=call_progress_log.id_agent and audit.datetime_init=call_progress_log.datetime_entry
 where id_break=9 
 and call_progress_log.duration is not null
-and datetime_entry between date( odDatuma )  and  ADDDATE( date( doDatuma )	,INTERVAL 1 DAY)
+and date(datetime_entry) between date( odDatuma )  and date( doDatuma )	
 ) as wrapUpTimes on datum.datum=wrapUpTimes.datum;
 
-END$$
+END

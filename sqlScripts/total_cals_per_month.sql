@@ -4,7 +4,7 @@
 -- --------------------------------------------------------------------------------
 DELIMITER $$
 
-CREATE DEFINER=`iservis_report`@`localhost` PROCEDURE `total_cals_per_month`()
+CREATE DEFINER=`ado`@`%` PROCEDURE `total_cals_per_month`()
 BEGIN
 select
 	period,
@@ -134,4 +134,4 @@ and call_progress_log.duration is not null
 group by year(audit.datetime_init) ,month(audit.datetime_init) 
 ) as wrapUpTimes on  datum.godina=wrapUpTimes.godina  and datum.mjesec=wrapUpTimes.mjesec
 order by period;
-END$$
+END
