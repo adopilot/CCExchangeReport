@@ -41,8 +41,8 @@
         else 'NE ' 
         end as scheduled
    ,campaign.name as kamapanja
-   from calls 
-   left outer join campaign on calls.id_campaign=campaign.id
+   from call_center_pro.calls 
+   left outer join call_center_pro.campaign on calls.id_campaign=campaign.id
    where id_campaign in ( " . $kampanje  . ") and  group_status IS NULL  and status IS NULL; ";
    
    $result = $mysqli->prepare($sql); 

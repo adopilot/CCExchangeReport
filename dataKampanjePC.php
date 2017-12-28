@@ -16,7 +16,14 @@
 		printf("Nijesam uspio ostvariti konekciju sa MySqlOm: %s\n", mysqli_connect_error());
 		exit();
 	}
-    $result = $mysqli->prepare("select id,name,estatus from campaign;");
+	$result = $mysqli->prepare("select id,name, 
+				case campaign.estatus 
+						when 'I' then 'Inactive'
+						when 'A' then 'Active'
+						when 'T' then 'Finished'
+        				else campaign.estatus
+			        end as estatus
+				from call_center_pro.campaign;");
     $result->execute();
 	/* bind result variables */
 	$result->bind_result(	 
