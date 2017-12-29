@@ -71,15 +71,16 @@ var initGridPoziviPc = function(){
             filterable: true,
             showtoolbar: true,
             toolbarheight: 50,
+            columnsreorder: true,
             columns: [
               { text: 'Id poziva', datafield: 'id',  },
               { text: 'Pozivani Telefonski broj', datafield: 'phone' },
-              { text: 'pokušaja',  datafield: 'retries' },
+              { text: 'Pokušaja',  datafield: 'retries' },
               { text: 'Status',  datafield: 'status' },
               { text: 'Grupni status',  datafield: 'group_status' },
               { text: 'Datum init poziva',  datafield: 'date_init' ,filtertype: 'date' , cellsformat: 'dd.MM.yyyy' },
-              { text: 'Vrijeme init',  datafield: 'time_init',filtertype: 'checkedlist' },
               { text: 'Datum end poziva',  datafield: 'date_end' ,filtertype: 'date' , cellsformat: 'dd.MM.yyyy' },
+              { text: 'Vrijeme init',  datafield: 'time_init',filtertype: 'checkedlist' },
               { text: 'Vrijeme end',  datafield: 'time_end',filtertype: 'checkedlist' },
               { text: 'Zakazan',  datafield: 'scheduled' ,filtertype: 'checkedlist' },
               { text: 'Kampanja' , datafield: 'kamapanja' ,filtertype: 'checkedlist'}
